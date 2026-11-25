@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elephant Analyzer Pro</title>
+<meta name="theme-color" content="#151727">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#080911;--panel:#151727;--panel2:#202238;--line:#30334d;--pink:#f02d83;--purple:#9b4de0;--text:#f7f5fc;--muted:#a8a8bd;--cyan:#54d8e8;--green:#46d6a1;--orange:#ffbd68}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0,#341442 0,transparent 38%),var(--bg);color:var(--text);font:15px system-ui,Arial,sans-serif}.wrap{max-width:760px;margin:auto;padding:16px 14px 40px}.head{display:flex;align-items:center;gap:12px;margin:8px 0 18px}.logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--pink),var(--purple));display:grid;place-items:center;font-size:28px;font-weight:900}.head h1{font-size:20px;margin:0}.head p{font-size:12px;color:var(--muted);margin:3px 0}.card{background:linear-gradient(145deg,#191b2e,#111321);border:1px solid var(--line);border-radius:20px;padding:16px;margin:13px 0;box-shadow:0 12px 32px #0005}.title{font-weight:850;font-size:17px;margin:0 0 13px}.sub{color:var(--muted);font-size:12px;line-height:1.55}.hero{background:linear-gradient(110deg,#ec247b,#9c3fd5);border:0;border-radius:14px;padding:16px;width:100%;font-size:17px;color:white;font-weight:900}.btn{background:#282b43;border:1px solid #444966;border-radius:12px;padding:12px;color:white;font-weight:750;width:100%}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:var(--panel2);padding:13px;border-radius:14px}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;font-size:23px;margin-top:5px}.pink{color:#ff78b6}.cyan{color:var(--cyan)}.purple{color:#c39aff}label{display:block;color:var(--muted);font-size:12px;margin:10px 0 5px}input,textarea,select{width:100%;background:#0c0e19;color:white;border:1px solid #3a3e58;border-radius:11px;padding:12px;font:15px system-ui}textarea{resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.notice{padding:11px 12px;border-radius:10px;background:#10202b;border-left:3px solid var(--cyan);font-size:12px;line-height:1.5;color:#ccecf2}.warn{background:#2b2118;border-left-color:var(--orange);color:#ffe2bd}.list{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.list:last-child{border:0}.pill{display:inline-block;border-radius:20px;background:#30233e;color:#dfc5ff;padding:5px 9px;font-size:11px;font-weight:800}.empty{color:var(--muted);font-size:13px;padding:10px 0}.actions{display:flex;gap:8px}.actions>*{flex:1}.preview{max-width:100%;max-height:240px;border-radius:12px;display:none;margin-top:10px}.footer{text-align:center;color:#777b91;font-size:11px;margin-top:20px}
+</style>
+</head>
+<body><main class="wrap">
+<header class="head"><div class="logo">E</div><div><h1>ELEPHANT ANALYZER PRO</h1><p>Leitura assistida • estatística • registo de testes</p></div></header>
+<section class="card">
+ <div class="title">Painel de controlo <span class="pill">VERSÃO 2.0</span></div>
+ <div class="grid">
+  <div class="metric"><small>Rodadas guardadas</small><strong id="total">0</strong></div>
+  <div class="metric"><small>Resultados ≥ 10x</small><strong id="high" class="pink">0</strong></div>
+  <div class="metric"><small>Testes avaliados</small><strong id="tested">0</strong></div>
+  <div class="metric"><small>Acertos observados</small><strong id="rate" class="cyan">—</strong></div>
+ </div>
+ <p class="sub">Os dados ficam guardados no navegador deste telemóvel. Não pedimos a tua palavra-passe nem acedemos à conta ElephantBet.</p>
+</section>
+<section class="card">
+ <div class="title">📷 Leitura assistida do histórico</div>
+ <label>Escolher uma captura de ecrã do histórico Aviator</label><input id="shot" type="file" accept="image/*">
+ <img id="preview" class="preview" alt="Pré-visualização da captura">
+ <button id="read" class="btn" style="margin-top:10px">LER MULTIPLICADORES DA IMAGEM</button>
+ <p id="ocrStatus" class="sub">Seleciona uma captura e carrega no botão. A leitura depende da qualidade da imagem e pode cometer erros.</p>
+ <label>Resultados encontrados — confirma e corrige antes de guardar</label>
+ <textarea id="ocrValues" rows="3" placeholder="Os multiplicadores lidos aparecerão aqui, separados por vírgulas."></textarea>
+ <button id="saveOcr" class="btn" style="margin-top:10px">CONFIRMAR E GUARDAR RESULTADOS</button>
+ <div class="notice warn" style="margin-top:12px">Esta função lê uma imagem que tu selecionas. Não acompanha o jogo em segundo plano nem recolhe automaticamente as rodadas ao vivo. O OCR pode confundir números; confirma sempre os valores.</div>
+</section>
+<section class="card">
+ <div class="title">🌹 GERAR ANÁLISE</div>
+ <button id="generate" class="hero">GERAR ANÁLISE</button>
+ <div id="analysis" class="empty">Importa ou regista resultados para gerar uma leitura estatística.</div>
+ <div class="notice warn" style="margin-top:12px">A análise descreve frequências passadas. Não prevê a próxima rodada nem indica horários garantidos para multiplicadores elevados. Os resultados do Aviator são aleatórios.</div>
+</section>
+<section class="card">
+ <div class="title">➕ Registar resultado manualmente</div>
+ <div class="row"><div><label>Multiplicador</label><input id="mult" type="number" min="1" step=".01" placeholder="Ex.: 2.35"></div><div><label>Hora</label><input id="time" type="time" step="1"></div></div>
+ <button id="add" class="btn" style="margin-top:10px">GUARDAR RESULTADO</button>
+</section>
+<section class="card">
+ <div class="title">📊 Distribuição dos multiplicadores</div><div id="dist" class="empty">Sem dados.</div><canvas id="chart" width="700" height="150" style="width:100%;height:140px;background:#0b0d18;border-radius:12px"></canvas>
+</section>
+<section class="card">
+ <div class="title">🛡️ Proteção pessoal</div>
+ <div class="row"><div><label>Limite de perda (unidades)</label><input id="loss" type="number" min="0" value="5"></div><div><label>Limite de ganho (unidades)</label><input id="win" type="number" min="0" value="5"></div></div>
+ <p class="sub">São lembretes de limites pessoais. Não controlam a conta nem tornam apostas seguras.</p>
+</section>
+<section class="card">
+ <div class="title">🧪 Verificar qualidade da análise</div>
+ <p class="sub">Gera uma análise, espera a rodada seguinte, introduz o resultado real e avalia se a categoria destacada coincidiu. A percentagem só será calculada a partir de testes registados.</p>
+ <div id="pending" class="empty">Nenhum teste pendente.</div>
+ <label>Multiplicador real da rodada seguinte</label><input id="actual" type="number" min="1" step=".01" placeholder="Ex.: 1.42">
+ <button id="evaluate" class="btn" style="margin-top:10px">AVALIAR TESTE</button>
+</section>
+<section class="card">
+ <div class="title">📁 Histórico e dados crus</div>
+ <div class="actions"><button id="csv" class="btn">EXPORTAR CSV</button><button id="wipe" class="btn">APAGAR DADOS</button></div>
+ <div id="history" style="margin-top:10px"><div class="empty">Sem resultados guardados.</div></div>
+</section>
+<section class="card">
+ <div class="title">🔔 Notificações</div>
+ <p class="sub">Ativa notificações para receber avisos enquanto a aplicação estiver em uso. Notificações automáticas em segundo plano exigem um serviço de envio e alojamento HTTPS.</p>
+ <button id="notify" class="btn">ATIVAR NOTIFICAÇÕES</button>
+ <p id="notifyStatus" class="sub">Ainda não configuradas.</p>
+</section>
+<div class="footer">ELEPHANT ANALYZER PRO 2.0 • Protótipo experimental</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+const $=x=>document.getElementById(x);let rounds=JSON.parse(localStorage.getItem('eap2_rounds')||'[]'),tests=JSON.parse(localStorage.getItem('eap2_tests')||'[]'),pending=null,shot=null;
+function persist(){localStorage.setItem('eap2_rounds',JSON.stringify(rounds));localStorage.setItem('eap2_tests',JSON.stringify(tests));render()}
+function cat(x){return x<2?0:x<=5?1:2}const names=['Abaixo de 2x','2x a 5x','Acima de 5x'];
+function parseNums(s){return (s.match(/[0-9]+(?:[.,][0-9]+)?\s*[xX]?/g)||[]).map(v=>Number(v.replace(/[xX]/g,'').replace(',','.').trim())).filter(v=>Number.isFinite(v)&&v>=1)}
+function render(){
+ $('total').textContent=rounds.length;$('high').textContent=rounds.filter(r=>r.m>=10).length;$('tested').textContent=tests.length;$('rate').textContent=tests.length?(100*tests.filter(t=>t.hit).length/tests.length).toFixed(1)+'%':'—';
+ let counts=[0,0,0];rounds.forEach(r=>counts[cat(r.m)]++);let n=rounds.length;
+ $('dist').innerHTML=n?names.map((s,i)=>`<div class="list"><span>${s}</span><b>${counts[i]} (${(100*counts[i]/n).toFixed(1)}%)</b></div>`).join(''):'Sem dados.';
+ let c=$('chart'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(n)counts.forEach((v,i)=>{let x=60+i*220,h=v/n*105;ctx.fillStyle=['#f02d83','#9b4de0','#54d8e8'][i];ctx.fillRect(x,122-h,90,h);ctx.fillStyle='#fff';ctx.font='16px Arial';ctx.fillText((v/n*100).toFixed(1)+'%',x,Math.max(16,112-h));ctx.fillText(['<2x','2–5x','>5x'][i],x+25,145)});
+ $('history').innerHTML=rounds.slice(-12).reverse().map(r=>`<div class="list"><span>${r.time||'Hora não registada'}</span><b>${r.m.toFixed(2)}x</b></div>`).join('')||'<div class="empty">Sem resultados guardados.</div>';
+}
+$('shot').onchange=e=>{shot=e.target.files[0]||null;if(shot){$('preview').src=URL.createObjectURL(shot);$('preview').style.display='block';$('ocrStatus').textContent='Imagem selecionada. Carrega em “Ler multiplicadores da imagem”.'}};
+$('read').onclick=async()=>{if(!shot){alert('Escolhe primeiro uma captura de ecrã.');return}if(!window.Tesseract){$('ocrStatus').textContent='Não foi possível carregar o motor OCR. Verifica a internet e tenta novamente.';return}
+$('read').disabled=true;$('ocrStatus').textContent='A ler a imagem… aguarda.';try{let result=await Tesseract.recognize(shot,'eng',{logger:m=>{if(m.status)$('ocrStatus').textContent=m.status+(m.progress?' '+Math.round(m.progress*100)+'%':'')}});let nums=parseNums(result.data.text);$('ocrValues').value=nums.join(', ');$('ocrStatus').textContent=nums.length+' possíveis multiplicadores encontrados. Confirma os valores manualmente.'}catch(e){$('ocrStatus').textContent='Falha na leitura. Tenta uma captura mais nítida ou introduz os valores manualmente.'}finally{$('read').disabled=false}};
+$('saveOcr').onclick=()=>{let nums=parseNums($('ocrValues').value);if(!nums.length){alert('Não encontrei números válidos.');return}nums.forEach(m=>rounds.push({m,time:'Hora não registada',source:'imagem'}));$('ocrValues').value='';persist();alert(nums.length+' resultados guardados. Confirma se correspondem à captura.')};
+$('add').onclick=()=>{let m=Number($('mult').value),time=$('time').value;if(!m||m<1){alert('Introduz um multiplicador válido.');return}rounds.push({m,time:time||'Hora não registada'});$('mult').value='';persist()};
+$('generate').onclick=()=>{if(rounds.length<10){$('analysis').textContent='Regista pelo menos 10 resultados para gerar uma leitura inicial.';return}let counts=[0,0,0];rounds.forEach(r=>counts[cat(r.m)]++);let i=counts.indexOf(Math.max(...counts));pending={pred:i};$('analysis').innerHTML=`<div class="metric"><small>Categoria mais frequente no histórico</small><strong class="pink">${names[i]}</strong><small>${(100*counts[i]/rounds.length).toFixed(1)}% em ${rounds.length} resultados registados</small></div><p class="sub">Esta é a frequência histórica mais elevada, não a probabilidade da próxima rodada. Não são calculados horários futuros.</p>`;$('pending').innerHTML=`<span class="pill">Teste pendente</span> Categoria destacada: ${names[i]}. Introduz o resultado da próxima rodada para medir o teste.`};
+$('evaluate').onclick=()=>{if(!pending){alert('Gera primeiro uma análise.');return}let m=Number($('actual').value);if(!m||m<1){alert('Introduz o resultado real.');return}tests.push({hit:pending.pred===cat(m),pred:pending.pred,actual:cat(m),m});pending=null;$('actual').value='';$('pending').textContent='Teste avaliado. Podes gerar uma nova análise.';persist()};
+$('csv').onclick=()=>{let csv='hora,multiplicador\\n'+rounds.map(r=>`${r.time||''},${r.m}`).join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='elephant-analyzer-historico.csv';a.click();URL.revokeObjectURL(a.href)};
+$('wipe').onclick=()=>{if(confirm('Apagar todos os dados guardados neste navegador?')){rounds=[];tests=[];pending=null;localStorage.removeItem('eap2_rounds');localStorage.removeItem('eap2_tests');$('analysis').textContent='Dados apagados.';$('pending').textContent='Nenhum teste pendente.';render()}};
+render();
+$('notify').onclick=async()=>{if(!('Notification' in window)){$('notifyStatus').textContent='Este navegador não suporta notificações.';return}let permission=await Notification.requestPermission();if(permission==='granted'){new Notification('Elephant Analyzer Pro',{body:'Notificações ativadas neste dispositivo.'});$('notifyStatus').textContent='Permissão concedida. Avisos em segundo plano ainda precisam de configurar o serviço de envio.'}else{$('notifyStatus').textContent='Permissão não concedida.'}};
+if ('serviceWorker' in navigator) { window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{})); }
+</script></body></html>
